@@ -32,17 +32,27 @@ struct SettingsRowBase: View {
 
 // MARK: - Section
 public struct SettingsSectionView<Content: View>: View {
-    let title: LocalizedStringKey
+    let title: LocalizedStringKey?
+    let footer: LocalizedStringKey?
     @ViewBuilder let content: Content
     
-    public init(_ title: LocalizedStringKey, @ViewBuilder content: () -> Content) {
+    public init(_ title: LocalizedStringKey? = nil, footer: LocalizedStringKey? = nil, @ViewBuilder content: () -> Content) {
         self.title = title
+        self.footer = footer
         self.content = content()
     }
     
     public var body: some View {
-        Section(title) {
+        Section {
             content
+        } header: {
+            if let title = title {
+                Text(title)
+            }
+        } footer: {
+            if let footer = footer {
+                Text(footer)
+            }
         }
     }
 }

@@ -32,34 +32,39 @@ struct ContentView: View {
     @State private var maxItems = 10
     
     var body: some View {
-        SettingsList(title: "设置", displayMode: .large) {
-            // 通知与同步 Section
+        SettingsList(title: "设置") {
+            // 通知与同步 Section（带标题）
             SettingsSectionView("通知与同步") {
                 toggle("推送通知", binding: $notificationsEnabled, icon: "bell")
                 status("同步状态", kind: .checkmark, icon: "icloud")
                 link("通知详细设置", destination: NotificationDetailView(), icon: "bell.badge")
             }
             
-            // 外观设置 Section
-            SettingsSectionView("外观") {
+            // 外观设置 Section（带标题和脚注）
+            SettingsSectionView("外观", footer: "选择您喜欢的应用外观样式") {
                 picker("主题", selection: $selectedTheme, options: ["浅色", "深色", "自动"], icon: "paintbrush")
                 colorPicker("强调色", binding: $accentColor, icon: "paintpalette")
                 link("字体设置", destination: FontSettingsView(), icon: "textformat")
             }
             
-            // 内容设置 Section
-            SettingsSectionView("内容") {
+            // 内容设置 Section（无标题，仅脚注）
+            SettingsSectionView(footer: "调整内容显示相关设置") {
                 slider("字体大小", binding: $fontSize, range: 12...24, icon: "textformat.size")
                 stepper("最大显示项目", binding: $maxItems, range: 5...50, icon: "number")
                 status("数据完整性", kind: .warning, icon: "exclamationmark.triangle")
             }
             
-            // 关于 Section
+            // 关于 Section（仅标题）
             SettingsSectionView("关于") {
                 link("应用信息", destination: AboutView(), icon: "info.circle")
                 link("使用条款", destination: TermsView(), icon: "doc.text")
                 link("隐私政策", destination: PrivacyView(), icon: "lock.shield")
                 row("版本信息", icon: "info")
+            }
+            
+            // 无标题无脚注的 Section
+            SettingsSectionView {
+                row("其他设置", icon: "gear")
             }
         }
         .navigationTitle("设置")
@@ -174,7 +179,23 @@ link("设置详情", destination: DetailView(), icon: "gear")
 主容器视图，用于包装所有设置 Section。
 
 ### SettingsSectionView
-设置 Section 视图，使用 `@ViewBuilder` 语法，可以在同一个 Section 中自由组合不同类型的行。
+设置 Section 视图，使用 `@ViewBuilder` 语法，可以在同一个 Section 中自由组合不同类型的行。支持可选的标题和脚注：
+- `title`: 可选的 Section 标题
+- `footer`: 可选的 Section 脚注说明文字
+
+```swift
+// 带标题和脚注
+SettingsSectionView("外观", footer: "选择您喜欢的应用外观样式") { ... }
+
+// 仅标题
+SettingsSectionView("设置") { ... }
+
+// 仅脚注
+SettingsSectionView(footer: "说明文字") { ... }
+
+// 无标题无脚注
+SettingsSectionView { ... }
+```
 
 ### SettingsRowBase
 基础设置行视图，支持多种配件类型（开关、选择器、颜色选择器等）。
