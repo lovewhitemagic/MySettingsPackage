@@ -49,9 +49,15 @@ public struct SettingsSectionView<Content: View>: View {
 
 // MARK: - SettingsList
 public struct SettingsList<Content: View>: View {
+    let title: LocalizedStringKey
+    let displayMode: NavigationBarItem.TitleDisplayMode
     @ViewBuilder let content: Content
     
-    public init(@ViewBuilder content: () -> Content) {
+    public init(title: LocalizedStringKey,
+                displayMode: NavigationBarItem.TitleDisplayMode = .inline,
+                @ViewBuilder content: () -> Content) {
+        self.title = title
+        self.displayMode = displayMode
         self.content = content()
     }
     
@@ -60,6 +66,8 @@ public struct SettingsList<Content: View>: View {
             List {
                 content
             }
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(displayMode)  // 使用外部传入的样式
         }
     }
 }

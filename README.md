@@ -32,7 +32,7 @@ struct ContentView: View {
     @State private var maxItems = 10
     
     var body: some View {
-        SettingsList {
+        SettingsList(title: "设置", displayMode: .large) {
             // 通知与同步 Section
             SettingsSectionView("通知与同步") {
                 toggle("推送通知", binding: $notificationsEnabled, icon: "bell")
