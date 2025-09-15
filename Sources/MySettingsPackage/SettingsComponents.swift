@@ -60,8 +60,6 @@ public struct SettingsList<Content: View>: View {
             List {
                 content
             }
-            .navigationTitle("设置")
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
@@ -132,11 +130,11 @@ public func status(_ title: LocalizedStringKey, kind: StatusKind, icon: String? 
         case .checkmark:
             return Image(systemName: "checkmark.circle.fill")
                 .foregroundColor(.green)
-                .font(.caption)
+                .font(.subheadline)
         case .warning:
             return Image(systemName: "exclamationmark.circle.fill")
                 .foregroundColor(.orange)
-                .font(.caption)
+                .font(.subheadline)
         }
     }()
     

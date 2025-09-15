@@ -62,6 +62,8 @@ struct ContentView: View {
                 row("版本信息", icon: "info")
             }
         }
+        .navigationTitle("设置")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
